@@ -23,13 +23,12 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "chriso345/nark.nvim",
   opts = {
-    position = "top_right",                         -- one of: top_right, top_left, bottom_right, bottom_left
-    min_severity = diag.severity.HINT,               -- only diagnostics with severity <= this are shown
+    position = "top_right",                          -- one of: top_right, top_left, bottom_right, bottom_left
+    min_severity = diag.severity.HINT,               -- minimal severity to display
     max_width = 30,                                  -- maximum float content width (columns)
-    top_inset = 0,                                   -- inset lines from top when using top_* positions
-    border = false,                                  -- false/nil = no border, or provide a string/table for nvim_open_win border
+    inset = 0,                                       -- inset lines from the border of the window
+    border = false,                                  -- border style (see :h nvim_open_win)
     max_items = 100,                                 -- cap number of shown diagnostics
-    only_current_client = false,                     -- show only the most-relevant attached LSP client's diagnostics
     hide_on_insert = true,                           -- close floats while in Insert mode
     hide_underline_diagnostics = false,              -- disable LSP underline diagnostics when true
     styles = {                                       -- format templates per severity

@@ -2,10 +2,9 @@
 ---@field position "top_right"|"top_left"|"bottom_right"|"bottom_left" Position of the notifications
 ---@field min_severity integer Minimum severity level to display; one of vim.diagnostic.severity
 ---@field max_width integer Maximum width (columns) of the diagnostics float
----@field top_inset integer Number of lines to inset the float from the top when positioned top_*
+---@field inset integer Number of lines to inset the float from the top when positioned top_*
 ---@field border boolean|nil Border style for diagnostics float; false/nil disables border, or provide an nvim_open_win border
 ---@field max_items integer Maximum number of diagnostics to display in the float
----@field only_current_client boolean If true, only show diagnostics from the most-relevant attached LSP client
 ---@field hide_on_insert boolean If true, close floats on InsertEnter
 ---@field hide_underline_diagnostics boolean If true, disables underline diagnostics in Neovim
 ---@field styles table<string, string> Mapping of severity names to format templates
@@ -41,7 +40,7 @@ M.defaults = {
   -- top_inset: when using top_* positions, inset the float by this many editor lines from the top.
   -- Useful to avoid covering a global statusline/tabline. Integer >= 0.
   -- Example: top_inset = 2
-  top_inset = 0,
+  inset = 0,
 
   -- border: border style for the float (passed to nvim_open_win).
   -- Allowed values:
@@ -55,12 +54,6 @@ M.defaults = {
   -- When the number of diagnostics exceeds this, the list is truncated.
   -- Example: max_items = 200
   max_items = 100,
-
-  -- only_current_client: when true, only display diagnostics originating from the most
-  -- relevant attached LSP client for the buffer (the one contributing the most diagnostics).
-  -- Set to false to aggregate diagnostics from all attached clients.
-  -- Example: only_current_client = true
-  only_current_client = false,
 
   -- hide_on_insert: if true, close/hide the diagnostics float while in Insert mode.
   -- Set to false to keep the float visible while inserting text.

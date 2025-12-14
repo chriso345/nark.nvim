@@ -83,35 +83,6 @@ function M.update(buf, cfg)
     -- ensure diagnostics engine doesn't show underlines or virtual text
     vim.diagnostic.config({ virtual_text = false, underline = false })
   end
-  -- optionally filter to diagnostics from the most-relevant attached LSP client
-  if cfg.only_current_client then
-    local clients = vim.lsp.get_clients({ bufnr = buf })
-    if clients and #clients > 0 and diags then
-      -- choose the client whose name appears most often in the diagnostics' source
-      local counts = {}
-      for _, d in ipairs(diags) do
-        local src = d.source or ""
-        counts[src] = (counts[src] or 0) + 1
-      end
-      local chosen_name
-      local maxc = 0
-      for _, c in ipairs(clients) do
-        local n = counts[c.name] or 0
-        if n > maxc then
-          maxc = n
-          chosen_name = c.name
-        end
-      end
-      chosen_name = chosen_name or clients[1].name
-      local filtered = {}
-      for _, d in ipairs(diags) do
-        if d.source == chosen_name then
-          table.insert(filtered, d)
-        end
-      end
-      diags = filtered
-    end
-  end
   if not diags or vim.tbl_isempty(diags) then
     -- close any existing floats when no diagnostics
     for _, f in pairs(M.floats) do
